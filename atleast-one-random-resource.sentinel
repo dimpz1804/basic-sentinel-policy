@@ -1,0 +1,9 @@
+import "tfplan/v2" as tfplan
+import "strings"
+resource_list = values(tfplan.resource_changes)
+random_resources = filter resource_list as r {
+    strings.has_prefix(r.type, "random_")
+}
+main = rule {
+    length(random_resources) >= 1
+}
